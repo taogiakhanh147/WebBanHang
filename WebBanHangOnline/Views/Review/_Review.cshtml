@@ -1,0 +1,37 @@
+﻿@model WebBanHangOnline.Models.EF.ReviewProduct
+<div class="add_review">
+    @using (Ajax.BeginForm("PostReview", "Review", new AjaxOptions
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "load_review",
+        OnSuccess = "OnSuccessRE",
+        OnFailure = "OnFailureRE",
+        OnBegin = "OnBeginRE"
+
+    }, new { @Id = "review_form" }))
+    {
+        <script>
+        function OnBeginRE() {
+            $('#btnCheckOut').attr("disabled", "disabled");
+            $('#load_send').html('<h3>Đang gửi....</h3>');
+        }
+        function OnSuccessRE(res) {
+            if (res.Success) {
+                $("#review_form")[0].reset();
+            }
+        }
+        </script>
+        @Html.AntiForgeryToken()
+        <div>
+            <h1>Thêm bình luận</h1>
+            @Html.TextBoxFor(x => x.FullName, new { @class = "form_input input_name", @placeholder = "Tên", @id = "review_name" })
+            @Html.HiddenFor(x => x.ProductId)
+        </div>
+        <div>
+            @Html.TextAreaFor(x => x.Content, new { @class = "input_review", @rows = "4", @placeholder = "Bình luận của bạn" })
+        </div>
+        <div class="text-left text-sm-right">
+            <button id="review_submit" type="submit" class="red_button review_submit_btn trans_300" value="Submit">submit</button>
+        </div>
+    }
+</div>
