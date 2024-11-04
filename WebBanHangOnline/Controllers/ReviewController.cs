@@ -32,8 +32,7 @@ namespace WebBanHangOnline.Controllers
                item.FullName = user.CustomerName;
                item.ProductId = productId;
             }
-                return PartialView();
-            return PartialView();
+                return PartialView(item);
         }
 
         [AllowAnonymous]
